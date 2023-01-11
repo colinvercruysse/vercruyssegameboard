@@ -9,6 +9,7 @@ export interface GameState {
 export interface Player {
     id: number,
     name: string,
+    previousScore: number,
     score: number,
     currentRound: number
 }

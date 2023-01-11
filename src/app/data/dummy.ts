@@ -6,13 +6,15 @@ export let state: GameState = {
         id: 0,
         name: 'Colin',
         score: 0,
-        currentRound: 0
+        currentRound: 0,
+        previousScore: 0,
       }, 
       {
         id: 1,
         name: 'Chadia',
         score: 0,
-        currentRound: 0
+        previousScore: 0,
+        currentRound: 0,
       }
     ],
     currentPlayer: 0,

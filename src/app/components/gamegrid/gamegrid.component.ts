@@ -10,7 +10,7 @@ import { state } from '../../data/dummy';
 export class GamegridComponent implements OnInit {
   public gameState: GameState = state;
 
-  displayedColumns: string[] = ['Name', 'Score', 'CurrentRound'];
+  displayedColumns: string[] = ['Name', 'PreviousScore', 'Score'];
 
   constructor() { }
 
