@@ -9,7 +9,8 @@ export interface GameState {
 export interface Player {
     id: number,
     name: string,
-    previousScore: number,
+    total: number,
     score: number,
-    currentRound: number
+    currentRound: number,
+    position: number,
 }

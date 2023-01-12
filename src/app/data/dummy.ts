@@ -7,14 +7,32 @@ export let state: GameState = {
         name: 'Colin',
         score: 0,
         currentRound: 0,
-        previousScore: 0,
+        total: 0,
+        position: 0,
       }, 
       {
         id: 1,
         name: 'Chadia',
         score: 0,
-        previousScore: 0,
+        total: 0,
         currentRound: 0,
+        position: 1,
+      },
+      {
+        id: 2,
+        name: 'Sam',
+        score: 0,
+        total: 0,
+        currentRound: 0,
+        position: 2
+      },
+      {
+        id: 3,
+        name: 'Tucker',
+        score: 0,
+        total: 0,
+        currentRound: 0,
+        position: 3
       }
     ],
     currentPlayer: 0,

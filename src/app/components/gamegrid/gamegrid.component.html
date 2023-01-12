@@ -1,24 +1,37 @@
 <h1>{{gameState.title}}</h1>
 <table mat-table [dataSource]="gameState.players">
+  <!-- Position Column -->
+  <ng-container matColumnDef="position">
+    <th mat-header-cell *matHeaderCellDef> No. </th>
+    <td mat-cell *matCellDef="let player"> {{player.position + 1}} </td>
+  </ng-container>
+
   <!-- Name Column -->
-  <ng-container matColumnDef="Name">
+  <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef> Name </th>
     <td mat-cell *matCellDef="let player"> {{player.name}} </td>
   </ng-container>
 
-  <!-- CurrentRound Column -->
-  <ng-container matColumnDef="PreviousScore">
-    <th mat-header-cell *matHeaderCellDef> Previous Score </th>
-    <td mat-cell *matCellDef="let player"> {{player.previousScore}} </td>
+  <!-- Score Column -->
+  <ng-container matColumnDef="score">
+    <th mat-header-cell *matHeaderCellDef> Score </th>
+    <td mat-cell *matCellDef="let player; let i = index"> 
+      <input matInput type="number"
+      placeholder={{player.score}} (change)="saveScore($event, i)">
+    </td>
   </ng-container>
 
-  <!-- Score Column -->
-  <ng-container matColumnDef="Score">
-    <th mat-header-cell *matHeaderCellDef> Score </th>
-    <td mat-cell *matCellDef="let player"> {{player.score}}</td>
+  <!-- total Column -->
+  <ng-container matColumnDef="total">
+    <th mat-header-cell *matHeaderCellDef> Total </th>
+    <td mat-cell *matCellDef="let player"> {{player.total}}</td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
+
+<div class="next-round-button-container">
+  <button mat-raised-button color="primary" (click)="onNextRound()">Next round</button>
+</div>
 
