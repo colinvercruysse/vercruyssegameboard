@@ -11,6 +11,7 @@ export interface Player {
     score: number,
     currentRound: number,
     position: number,
+    nullen: number,
 }
 
 export interface Game {
@@ -23,9 +24,11 @@ export interface Game {
 }
 
 export enum EGame {
+    NONE,
     UNO,
     CHINEESPOEPEN,
-    NULLENSPEL
+    NULLENSPEL,
+    PHASE10
 }
 
 export interface Config {

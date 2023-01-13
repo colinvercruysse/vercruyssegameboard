@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { GameState, Player } from 'src/app/data/interfaces';
+import { EGame, GameState, Player } from 'src/app/data/interfaces';
 import { state } from '../../data/dummy';
 
 @Component({
@@ -10,7 +10,7 @@ import { state } from '../../data/dummy';
 export class GamegridComponent implements OnInit {
   public gameState: GameState;
 
-  displayedColumns: string[] = ['position','name', 'score', 'total'];
+  displayedColumns: string[] = ['position','name', 'score','nullen', 'total'];
 
   constructor() { 
     let s: GameState;
@@ -30,6 +30,8 @@ export class GamegridComponent implements OnInit {
     if (event.target && event.target.value) {
       this.addScoreToTotal(index,parseInt(event.target.value))
     }
+
+    event.target.value = '';
   }
 
   addScoreToTotal(id: number, score: number) {
@@ -43,6 +45,13 @@ export class GamegridComponent implements OnInit {
       player.total = player.total + score;
     }
 
+    // Add nullen
+    if (this.gameState.game.type === EGame.NULLENSPEL) {
+      if (player && player.total === 0) {
+        player.nullen = player.nullen + 1;
+      }
+    }
+
     this.gameState = state;
   }
 
@@ -53,7 +62,33 @@ export class GamegridComponent implements OnInit {
     state.players.forEach(player => player.currentRound = player.currentRound + 1);
 
     // Calculate positions
-    let orderedPlayers = this.orderUno(state);
+    let orderedPlayers = [...state.players];
+    switch(this.gameState.game.type) {
+      case EGame.UNO:
+        orderedPlayers = this.orderMostPointsFirst(state);
+        break;
+
+      case EGame.CHINEESPOEPEN:
+        orderedPlayers = this.orderMostPointsFirst(state);
+        break;
+
+      case EGame.NULLENSPEL:
+        orderedPlayers = this.orderNullenSpel(state);
+        break;
+
+      case EGame.PHASE10:
+        orderedPlayers = this.orderLeastPointsFirst(state);
+        break;
+
+      case EGame.NONE:
+        orderedPlayers = this.orderMostPointsFirst(state);
+        break;
+      
+      default:
+        orderedPlayers = this.orderMostPointsFirst(state);
+        break;
+    }
+
 
     state.players.forEach(player => player.position = orderedPlayers.findIndex(p => p.name === player.name));
 
@@ -62,7 +97,7 @@ export class GamegridComponent implements OnInit {
     this.save('currentState', JSON.stringify(this.gameState));
   }
 
-  orderUno(state: GameState): Player[] {
+  orderMostPointsFirst(state: GameState): Player[] {
     return [...state.players].sort((a, b) => {
       if (a.total > b.total) return -1;
       else if (a.total < b.total) return 1;
@@ -70,8 +105,28 @@ export class GamegridComponent implements OnInit {
     });
   }
 
+  orderNullenSpel(state: GameState): Player[] {
+    return [...state.players].sort((a, b) => {
+      if (a.nullen > b.nullen) return -1;
+      else if (a.nullen < b.nullen) return 1;
+      else return 0;
+    })
+  }
+
+  orderLeastPointsFirst(state: GameState): Player[] {
+    return [...state.players].sort((a, b) => {
+      if (a.total < b.total) return -1;
+      else if (a.total > b.total) return 1;
+      else return 0;
+    });
+  }
+
   save(key: string, data: string) {
     localStorage.setItem(key, data);
+  }
+
+  onEndGame() {
+    
   }
 
 }
