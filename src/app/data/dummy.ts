@@ -1,4 +1,4 @@
-import { GameState } from "./interfaces";
+import { EGame, GameState } from "./interfaces";
 
 export let state: GameState = {
     players: [
@@ -36,7 +36,12 @@ export let state: GameState = {
       }
     ],
     currentPlayer: 0,
-    maxRounds: 10,
-    maxScore: 501,
-    title: 'Uno'
+    game: {
+      name: 'Uno',
+      type: EGame.UNO,
+      maxScore: 501,
+      winner: undefined,
+      maxRounds: Number.MAX_SAFE_INTEGER,
+      round: 0
+    }
   }

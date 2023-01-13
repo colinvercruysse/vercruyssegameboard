@@ -1,9 +1,7 @@
 export interface GameState {
     players: Player[],
     currentPlayer: number,
-    maxRounds: number | null | undefined,
-    maxScore: number | null | undefined,
-    title: string
+    game: Game
 }
 
 export interface Player {
@@ -13,4 +11,23 @@ export interface Player {
     score: number,
     currentRound: number,
     position: number,
+}
+
+export interface Game {
+    name: string,
+    type: EGame,
+    maxScore: number,
+    maxRounds: number,
+    winner: Player | undefined,
+    round: number,
+}
+
+export enum EGame {
+    UNO,
+    CHINEESPOEPEN,
+    NULLENSPEL
+}
+
+export interface Config {
+    games: Game[]
 }
